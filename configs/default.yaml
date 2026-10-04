@@ -1,0 +1,39 @@
+data:
+  task_name: "matbench_jdft2d"
+  cutoff_radius: 8.0
+  max_neighbors: 12
+  batch_size: 16
+  num_workers: 2
+
+gnn:
+  conv_type: "CGConv"
+  node_input_dim: 92  # one-hot atomic number
+  edge_input_dim: 41  # Gaussian distance expansion bins
+  hidden_dim: 64
+  num_layers: 3
+  output_dim: 8  # matches n_qubits
+
+quantum:
+  n_qubits: 8
+  n_layers: 3
+  encoding: "angle"
+  diff_method: "backprop"
+
+mlp:
+  hidden_dim: 32
+  dropout: 0.2
+  skip_connection: true
+
+training:
+  lr: 0.001
+  weight_decay: 1.0e-5
+  epochs: 300
+  patience: 20
+  lr_patience: 10
+  lr_factor: 0.5
+  grad_clip: 1.0
+  seed: 42
+
+device:
+  gnn: "cuda"  # GNN on GPU
+  quantum: "cpu"  # Quantum sim always on CPU
